@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir -p welcome/to/school
+echo "Directories welcome/, welcome/to/, and welcome/to/school created"
