@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Change the owner to "vincent" and the group owner to "staff" for the "hello" file
+chown vincent:staff _hello

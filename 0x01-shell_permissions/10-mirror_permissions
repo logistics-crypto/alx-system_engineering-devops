@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Extract the mode of the "olleh" file
+mode=$(stat -c '%a' olleh)
+
+# Apply the mode to the "hello" file
+chmod "$mode" hello
