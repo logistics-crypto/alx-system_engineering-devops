@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "ibase=$WATER; $WATER + ibase=$STIR; $STIR" | bc | xargs -I{} echo "obase=$BESTCHOL; {}" | bc
