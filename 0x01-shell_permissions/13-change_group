@@ -1,4 +1,2 @@
 #!/bin/bash
-
-# Change the group owner of the "hello" file to "school"
 chgrp school hello

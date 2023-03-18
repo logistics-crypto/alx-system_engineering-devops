@@ -1,7 +1,2 @@
 #!/bin/bash
-
-# Download the script
 curl -s https://raw.githubusercontent.com/oliverhk2003/starwars-episode-4-script/master/Star%20Wars%20IV%20Script.txt > script.txt
-
-# Display the script
-cat script.txt
