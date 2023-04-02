@@ -1,1 +1,0 @@
-project stuff shell permissions
