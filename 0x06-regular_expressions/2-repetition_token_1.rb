@@ -1,3 +1,3 @@
 #!/usr/bin/env ruby
-puts ARGV[0].scan(/hb?t?n/).join
+puts ARGV[0].scan(/h??t?n/).join
 puts ARGV[0].scan(/hbtn/).join
