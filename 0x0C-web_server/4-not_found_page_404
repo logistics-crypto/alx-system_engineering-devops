@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Configure Nginx server to give error 404 page
+
+# Update package list
+apt-get update
+
+# Install Nginx
+apt-get -y install nginx
+
+# Allow Nginx through the firewall
+ufw allow 'Nginx HTTP'
+
+# Set permissions for the web directory
+chmod -R 755 /var/www
+
+# Create a simple index.html file
+echo 'Hello World' > /var/www/html/index.html
+
+# Nginx configuration
+nginx_config="/etc/nginx/sites-available/default"
+new_config="
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+
+    error_page 404 /404.html;
+    location  /404.html {
+        internal;
+    }
+
+    if (\$request_filename ~ redirect_me){
+        rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+    }
+}
+"
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# Write Nginx configuration to the file
+echo "$new_config" > "$nginx_config"
+
+# Restart Nginx service
+if pgrep nginx > /dev/null; then
+    sudo service nginx restart
+else
+    sudo service nginx start
+fi
