@@ -1,5 +1,9 @@
-#!/usr/bin/env bash
-# Installing new server to serve content
-./0-nginx_likes_port_80
-echo "hi" > /var/run/nginx.pid
-echo "hi" > /run/nginx.pid
+#!/bin/bash
+
+if ! ps -ef | grep nginx | grep master > /dev/null; then
+  echo "service (init) says that nginx is not running"
+else
+  echo "Nginx process seems to be running, but service status might be outdated"
+fi
+
+echo  # Add an empty line at the end

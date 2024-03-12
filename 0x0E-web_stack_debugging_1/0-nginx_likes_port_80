@@ -1,8 +1,35 @@
-#!/usr/bin/env bash
-# Setting up server to curl port 80 with no issues
-apt-get update
-apt-get -y install curl
-rm /etc/nginx/sites-available/*
-rm /etc/nginx/sites-enabled/*~
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-sudo service nginx restart
+#!/bin/bash
+
+# Function to check Nginx configuration for port 80
+check_config() {
+  if ! grep -qE '^listen\s+80' /etc/nginx/nginx.conf; then
+    echo "Error: Nginx not configured to listen on port 80"
+  fi
+}
+
+# Function to check for running Nginx master process
+check_process() {
+  if ! ps -ef | grep nginx | grep master > /dev/null; then
+    echo "Error: Nginx master process not running"
+    exit 1
+  fi
+}
+
+# Main script execution
+check_config
+check_process
+
+# Identify conflicting processes (optional)
+# netstat -tlpn | grep :80 | grep -v nginx
+
+# Restart Nginx (if checks pass)
+service nginx restart
+
+# Verify listening on port 80 for all interfaces
+for ip in $(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}'); do
+  if ! nc -z $ip 80; then
+    echo "Warning: Nginx not listening on $ip:80"
+  fi
+done
+
+echo  # Add an empty line at the end
